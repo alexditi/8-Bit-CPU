@@ -1,0 +1,74 @@
+// This program implements a basic array structure for the 8 bit CPU
+// An Array is classified by its length and its starting index
+// in the main program, the basic array functions read_index and write_index
+// initialize pointers
+len = 0x7e
+start_index = 0x7f
+param1 = 0xfe
+param2 = 0xfd
+return1 = 0xfc
+
+// initialize array
+LVA 0x08
+STA len
+LVA 0x80
+STA start_index
+
+// calling the basic functions
+
+// store some values
+LVA 0x02
+STA param1
+LVA 0x2a
+STA param2
+CALL #write_index
+
+LVA 0x04
+STA param1
+LVA 0x42
+STA param2
+CALL #write_index
+
+// Clear A and output 0x11
+LVA 0x11
+OUTA
+
+// read some values
+LVA 0x04
+STA param1
+CALL #read_index
+LMA return1
+OUTA
+
+LVA 0x02
+STA param1
+CALL #read_index
+LMA return1
+OUTA
+
+HLT
+
+// subroutine read_index
+// reads value at index stored in param1 in RAM
+// stores the value in return1 in RAM
+// => return1 = array[param1]
+#read_index
+LMA start_index
+LMB param1
+ADDB
+A2C
+LMAC
+STA return1
+RET
+
+// subroutine write_index
+// writes the value from param2 in RAM to index stored in param 1 in RAM
+// => array[param1] = param2
+#write_index
+LMA start_index
+LMB param1
+ADDB
+A2C
+LMA param2
+STAC
+RET

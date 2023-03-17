@@ -1,0 +1,11 @@
+LVA
+0x01
+ADDB
+JC
+0x0a
+OUTA
+C2B
+A2C
+JMP
+0x02
+HLT

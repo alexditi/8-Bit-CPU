@@ -1,0 +1,13 @@
+LMA 0xff
+OUTA
+
+LVC 0xfe
+LMAC
+OUTA
+
+INCC
+A2C
+LMAC
+OUTA
+
+HLT
