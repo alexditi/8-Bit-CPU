@@ -33,6 +33,8 @@ CALL #write_index
 LVA 0x11
 OUTA
 
+HLT
+
 // read some values
 LVA 0x04
 STA param1
@@ -72,3 +74,4 @@ A2C
 LMA param2
 STAC
 RET
+
