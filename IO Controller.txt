@@ -1,18 +1,24 @@
-io controller I/O Lines
-- Bus Data and Address I/O
-- Device 1-8
+Neues Register:
+- IOMAR = I/O Memory Address Register => Address Register for I/O Controller
+- In diesem Register: Speicheradresse für den externen Speicher (Wird von IO Controller gemanaged)
 
-io controller control pins
-- L_IO: Load IO Memmory Address Register
-- W_IO: Write to I/O Controller
-- R_IO: Read from I/O Controller
+IO Controller Bus Lines:
+- Data Line Device 1-8 (vlt Richtungsunabhängig, wenn nicht Input Line und Output Line)
+- Address Line Device 1-8
+- CPU Bus Line (für Data IO und Adresse)
 
-Aufgabe des Controllers:
-- Wenn L_IO: I/O in MAR speichern
-- Wenn W_IO: I/O auf devices schreiben (CS und Adresse ist ausgewählt)
-- Wenn R_IO: I/O von Devices lesen (CS und Adresse ist ausgewählt)
+IO Controller Control Pins / Control Bits
+- L_IO: Load IOMAR from CPU Bus
+- W_IO: Write to given Address
+- R_IO: Read from given Address
 
-- Von MAR: 8 Bit Adresse aufsplitten 
-- 8-Bit Adresse aufsplitten und chip selects wählen
+Aufgabe des IO Controllers:
+- Wenn L_IO: Adresse von CPU Bus in IOMAR speichern
+- gegebene Adresse soll dekodiert werden:
+	=> Anhand IO Controller Konfiguration (welche Adressbereiche für welche IO Devices)
+	=> CS-Signale setzen
+	=> Und Device interne Adresse setzen
+- Wenn W_IO: Wert von Bus in IO Device schreiben schreiben (CS und Adresse ist ausgewählt)
+- Wenn R_IO: Wert von IO Device lesen, auf CPU Bus schreiben (CS und Adresse ist ausgewählt)
 
 
