@@ -3,9 +3,24 @@ Neues Register:
 - In diesem Register: Speicheradresse für den externen Speicher (Wird von IO Controller gemanaged)
 
 IO Controller Bus Lines:
-- Data Line Device 1-8 (vlt Richtungsunabhängig, wenn nicht Input Line und Output Line)
+- Data Line Devices (vlt Richtungsunabhängig, wenn nicht Input Line und Output Line)
 - Address Line Device 1-8
 - CPU Bus Line (für Data IO und Adresse)
+
+IO Controller Device Control Pins:
+- CS 1-8 (1 Bit, Chip Select)
+- DR 1-8 (Data Ready, wenn Daten zur Verfügung stehen)
+
+Interrupt:
+- Input 8 Bit => IE für Device 1-8
+- Output 8 Bit => Interrupt für welches Device?
+- Interrupt Bit (es steht ein Interrupt zur Verfügung!)
+
+=> Interrupt soll auslösen, wenn ein Deivce (valide) Daten am Ausgang hat
+=> Selbst wenn keine Leseanfrage von CPU => valide Daten am Ausgang => Interupt
+=> Leseanfrage an Device ohne Interrupt => Es wird direkt der Wert gelesen, der im Buffer Register ist
+=> Leseanfrage an Device mit Interrupt => Ist der Wert im Register valide, wird ein Interrupt getriggert
+=> Dabei wird zwar ein Wert gelesen, dieser darf aber nicht verwendet werden (warten auf Interrupt)
 
 IO Controller Control Pins / Control Bits
 - L_IO: Load IOMAR from CPU Bus
@@ -19,6 +34,6 @@ Aufgabe des IO Controllers:
 	=> CS-Signale setzen
 	=> Und Device interne Adresse setzen
 - Wenn W_IO: Wert von Bus in IO Device schreiben schreiben (CS und Adresse ist ausgewählt)
-- Wenn R_IO: Wert von IO Device lesen, auf CPU Bus schreiben (CS und Adresse ist ausgewählt)
+- Wenn R_IO: Wert von IO Device lesen, (in Register buffern) und dann auf CPU Bus schreiben (CS und Adresse ist ausgewählt)
 
 
