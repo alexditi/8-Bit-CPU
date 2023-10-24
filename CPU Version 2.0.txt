@@ -1,0 +1,32 @@
+Neustrukturierung der CPU:
+- Umstellung auf 16 Bit (Adressen und Daten)
+- Implementierung eines Memory Controllers: Verwaltung von allen 2^16 Adressen, Verteilung der Daten auf Speicherbereiche
+- Speicherbereiche:
+-> Control Register: Registerbank mit Steuerwörtern für Komponenten (z.B. Interrupts, ...)
+	=> Haben direkt Ausgänge an die zu steuernden Komponenten
+-> RAM Bereich für Daten/Programm
+	=> großer RAM Bereich, in den frei geschrieben/aus dem frei gelesen werden kann
+-> evtl ROM Bereich für statische ISR o. SR generell
+	=> Multiplizieren SR, ...
+-> IO Controller Speicherbereich (Kommunikation mit IO Controller)
+	=> Zugriff auf externe Peripherie (z.B. Tastatur)
+
+- Arbeitsregister: Registerbank mit 8 Registern
+- Diese können mit LDX beschrieben werden
+- intern sind zwei dieser Register (0 und 1, Akku und Basisregister) direkt mit der ALu verbunden
+- die anderen sind GP-Register für das Zwischenspeichern von Daten
+- Registerdatenbank über 3 bit angesteuert (3 Steuersignale)
+
+- Stack implementieren (PUSH und POP Operationen)
+- mehrere Stacks in einem RAM Element, organisiert über Stack Pointer
+=> STACKA für Subroutinen, um Adressen abzulegen (wird automatisch von CPU bei JSR und RET angesprochen)
+=> STACKB, um Parameter und Return Werte zu speichern
+=> STACKC als Arbeitsstack (kann mit PSH und POP angesteuiert werden)
+
+Interrupt Handler als eigene Struktur (ruft bei Interrupts entsprechende ISRs durch Vector Pointer auf)
+- Alle möglichen Interrupts als Eingang
+- Stoppt bei vorhandenem Interrupt zu passendem Zeitpunkt Programmausführung
+
+IO Controller triggert Interrupts, wenn Daten verfügbar sind (und IE gesetzt)
+Tastatur als nur Input Device definieren
+Bei Speicher: Lesen Anfragen (RR) und interrupt bei valid Data
