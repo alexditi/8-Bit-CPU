@@ -1,0 +1,39 @@
+- Testaufbau für manuelles setzen von Steuersignalen mit einem getrennten Programm- & Datenspeicher fertig stellen
+	DONE
+- Test durchführen
+	=> Funktioniert alles theoretisch (können die Befehle ausgeführt werden)
+	=> Sind die zeitlichen Abläufe so wie erwartet?
+	=> An welchen Stellen muss was angepasst werden, damit die zeitlichen Abläufe den Erwartungen entsprechen
+		DONE
+	=> TODO Noch Add und Store Befehle überprüfen => Alles mit Programmspeicher
+	=> TODO noch unbedingten JMP Befehl testen
+
+Änderungen an dieser Stelle, die noch in dieser Stufe übernommen werden sollen
+- Zählen zu Steuersignalen und sind deswegen noch für diese Stufe relevant!
+	- Wenn die Pipeline anläuft (Aktuell nur am Anfang, idk wie es nach Pipeline reset aussieht), soll im ersten Schritt NICHT der Befehl in den Dekoder geladen werden => PC bzw. Adressregister nicht valid!
+	=> Signal Pipeline Stop. Ist über NOT z.B. mit LD IAR, INC PC und LD DEC verbunden (und weiteren notwendigen Signalen, gerade idk)
+	=> BRBS/C auch als zweitaktigen Befehl implementieren
+	=> im ersten Takt LD PC aktivieren, Im zweiten Takt schauen: entweder stand RESET Pipeline noch an => nicht machen => oder falls pipeline schon wieder aktiv: NOP in Dekoder laden!
+		TODO Hier das genannte Timing Problem prüfen!
+
+	=> SR Latch PIPELINE AUTO: Wenn 1, ist die Pipeline komplett zu aktivieren. Bei 0 ist LD DEC zu deaktivieren, weil das IAR noch nicht valid ist
+	=> Wird asynchron auf 0 gesetzt bei BRBS/C Befehl und bei CPU Reset
+	=> SET Pipeline AUto: Wenn Pipeline initialisiert wurde (IAR ist valid und Befehl darf in Dekoder) => Einfach im Nächsten Takt, Pipeline Auto auf 0 gegangen ist
+
+	=> SR Latch für zweitaktige Befehle!
+		SOWEIT DONE DONE DONE
+
+- Auf Basis dieser Testergebnisse einen Testaufbau mit einem gemeinsamen Programm- & Datenspeicher fertig stellen!
+	=> Hier die Bitbreite dabei belassen und für erweiterte Adresse von Datenspeicher bzw verminderte Adresse Programm Bits sinnvoll auffüllen
+- Auch hier Tests durchführen
+	=> An welchen Stellen müssen TImings angepasst werden?
+	=> Ist es nöglich mit den aktuellen Timings eine von-Neumann-Architektur aufzubauen?
+	=> Falls nicht: Änderungen implementieren
+
+- Aus Basis dieser Testergebnisse einen Testaufbau in der Registerarchitektur erstellen
+	=> Auf Registerbank mit arithmetischen/logischen Befehlen mit Ziel-&Quellregister umsteigen
+- Auch hier Tests durchführen
+	=> An welchen Stellen ändern sich die Timings
+	=> Optimieren bei arithmetisch/logischen Operationen!!!
+
+- Am Ende auf Basis des letzten Testaufbaus eine Kontrollogik ROM erstellen und implementieren
