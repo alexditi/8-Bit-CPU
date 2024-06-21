@@ -1,0 +1,2 @@
+In der Ablaufsteuerung wird die Maske direkt mit dem SREG verarbeitet
+Ein Schaltnetz testet generell auf Bedingung true/false, sodass nur noch ein Zustand bei BRBS/C an der Ablaufsteuerung etwas ändert

@@ -1,0 +1,29 @@
+// defining addresses
+operand1 = 0xfe			// 1 byte
+operand2 = 0xfd			// 1 byte
+result = 0xfe			// 1 byte
+
+// main part of the program
+CALL #multiply
+LMA result
+OUTA
+HLT
+
+// multiplication subroutine
+#multiply
+LVC 0
+LMB operand1
+
+#multiply_loop
+DECAD operand2
+STA operand2
+JN #end_of_multiply
+C2A
+ADDB
+A2C
+JMP #multiply_loop
+
+#end_of_multiply
+STC operand1
+RET
+

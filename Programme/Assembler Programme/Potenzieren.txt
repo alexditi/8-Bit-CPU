@@ -1,7 +1,0 @@
-LVA 0x02
-
-#cycle
-OUTA
-A2B
-ADDB
-JMP #cycle

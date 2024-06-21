@@ -1,0 +1,15 @@
+Input OP (Operation)
+0: ADD
+1: SUB => SUB=1
+2: AND
+3: OR
+4: NOT
+5: XOR
+6: DEC => SUB=1, Cin=1, B=0
+7: INC => Cin=1, B=0
+
+Input Cin
+- C-Bit aus SREG z.B. für 16 Bit Operationen
+
+Input ADC
+- C-Bit aus SREG als C-in verwenden (z.B. addc oder subc)

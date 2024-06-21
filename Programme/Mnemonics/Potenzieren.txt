@@ -1,7 +1,0 @@
-LVA
-0x02
-OUTA
-A2B
-ADDB
-JMP
-0x02
